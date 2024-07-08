@@ -7,13 +7,16 @@ export default function App() {
   const [origem, setOrigem] = useState(null);
   const [destino, setDestino] = useState(null);
   const [resultado, setResultado] = useState(null); // Estado para armazenar o resultado
+  const [erro, setErro] = useState(null); // Estado para armazenar a mensagem de erro
 
   const handleOrigemChange = (novaOrigem) => {
     setOrigem(novaOrigem);
+    setErro(null); // Limpa a mensagem de erro ao selecionar uma nova origem
   };
 
   const handleDestinoChange = (novoDestino) => {
     setDestino(novoDestino);
+    setErro(null); // Limpa a mensagem de erro ao selecionar um novo destino
   };
 
   const handleSubmit = () => {
@@ -21,8 +24,10 @@ export default function App() {
       const g = new Graph(19); // Cria uma nova instância do grafo
       const resultado = main(origem, destino, g); // Chama a função main com origem e destino
       setResultado(resultado); // Armazena o resultado no estado
+      setErro(null); // Limpa qualquer mensagem de erro existente
     } else {
-      console.log("Por favor, selecione uma origem e um destino.");
+      setResultado(null); // Limpa o resultado anterior
+      setErro("Por favor, selecione uma origem e um destino.");
     }
   };
 
@@ -48,6 +53,10 @@ export default function App() {
     "Riacho fundo",
   ];
 
+  const converterCaminhoParaNomes = (caminho) => {
+    return caminho.map((indice) => opcoes[indice]);
+  };
+
   return (
     <div className="container">
       <RadioButtons
@@ -63,10 +72,13 @@ export default function App() {
         onChange={handleDestinoChange}
       />
       <button onClick={handleSubmit}>Enviar</button>
+      {erro && <p className="erro">{erro}</p>}
       {resultado && (
         <div>
           <p>Custo: {resultado.custo}</p>
-          <p>Caminho: {resultado.caminho.join(" -> ")}</p>
+          <p>
+            Caminho: {converterCaminhoParaNomes(resultado.caminho).join(" <- ")}
+          </p>
         </div>
       )}
     </div>
