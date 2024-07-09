@@ -58,27 +58,56 @@ export default function App() {
   };
 
   return (
-    <div className="container">
-      <RadioButtons
-        titulo="Origem"
-        opcoes={opcoes}
-        valorSelecionado={origem}
-        onChange={handleOrigemChange}
-      />
-      <RadioButtons
-        titulo="Destino"
-        opcoes={opcoes}
-        valorSelecionado={destino}
-        onChange={handleDestinoChange}
-      />
-      <button onClick={handleSubmit}>Enviar</button>
+    <div className="container-body">
+      <div className="container-title">
+        <h1>Menor caminho em Brasília</h1>
+        <p>
+          Selecione uma cidade de Origem e uma de Destino para saber o menor
+          caminho entre elas.
+        </p>
+      </div>
+
+      <div className="container-form">
+        <div className="container-radio">
+          <RadioButtons
+            titulo="Origem"
+            opcoes={opcoes}
+            valorSelecionado={origem}
+            onChange={handleOrigemChange}
+          />
+          <RadioButtons
+            titulo="Destino"
+            opcoes={opcoes}
+            valorSelecionado={destino}
+            onChange={handleDestinoChange}
+          />
+        </div>
+        <button onClick={handleSubmit}>Enviar</button>
+      </div>
+
       {erro && <p className="erro">{erro}</p>}
       {resultado && (
-        <div>
-          <p>Custo: {resultado.custo}</p>
-          <p>
-            Caminho: {converterCaminhoParaNomes(resultado.caminho).join(" <- ")}
-          </p>
+        <div className="container-resultado">
+          <h1>Resultado</h1>
+          <p>Distância: {resultado.custo}km</p>
+
+          <div className="container-caminho">
+            <h3 className="texto-origem">{opcoes[resultado.caminho[0]]}</h3>
+            {converterCaminhoParaNomes(resultado.caminho.slice(1, -1)).map(
+              (cidade, index) => (
+                <React.Fragment key={index}>
+                  <span className="seta">&gt;</span>
+                  <div className="caminho-cidade">
+                    <p>{cidade}</p>
+                  </div>
+                </React.Fragment>
+              )
+            )}
+            <span className="seta">&gt;</span>
+            <h3 className="texto-destino">
+              {opcoes[resultado.caminho[resultado.caminho.length - 1]]}
+            </h3>
+          </div>
         </div>
       )}
     </div>

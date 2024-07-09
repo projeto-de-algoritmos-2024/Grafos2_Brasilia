@@ -1,4 +1,5 @@
 import React from "react";
+import "./RadioButtons.css"; // Adicione um arquivo CSS para estilos
 
 export default function RadioButtons({
   titulo,
@@ -12,22 +13,21 @@ export default function RadioButtons({
   };
 
   return (
-    <div>
-      <label htmlFor={titulo} id="title">
-        {titulo}
-      </label>
-      <br />
-      {opcoes.map((opcao, index) => (
-        <label key={opcao} id={titulo}>
-          <input
-            type="radio"
-            value={index}
-            checked={valorSelecionado === index}
-            onChange={handleChange}
-          />
-          {opcao}
-        </label>
-      ))}
+    <div className="radio-buttons-container">
+      <h2>{titulo}</h2>
+      <div className="radio-buttons-grid">
+        {opcoes.map((opcao, index) => (
+          <label key={opcao} className="radio-button-label">
+            <input
+              type="radio"
+              value={index}
+              checked={valorSelecionado === index}
+              onChange={handleChange}
+            />
+            {opcao}
+          </label>
+        ))}
+      </div>
     </div>
   );
 }
