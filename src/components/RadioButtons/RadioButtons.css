@@ -1,0 +1,16 @@
+.radio-buttons-container {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.radio-buttons-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 50px;
+  grid-row-gap: 10px;
+}
+
+.radio-button-label {
+  display: flex;
+  align-items: center;
+}
