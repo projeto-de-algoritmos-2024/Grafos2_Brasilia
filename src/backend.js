@@ -57,8 +57,8 @@ class Graph {
     for (var a = des; a != src; a = origem[a]) {
       caminho.push(origem[a]);
     }
-    caminho.push(src);
     caminho.reverse();
+    caminho.push(des);
 
     return { custo: dist[des], caminho };
   }
